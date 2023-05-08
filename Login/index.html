@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&family=Open+Sans:ital@1&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+    }
+    
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    
+    .form {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+      max-width: 300px;
+      width: 100%;
+      text-align: center;
+      font-family: 'Merriweather', serif;   
+     }
+    
+    .form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+    
+    .form .button-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .form button {
+      flex-basis: 48%;
+      padding: 10px;
+      background-color: #4285f4;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-weight: bold;
+      font-family: 'Open Sans', sans-serif;
+
+    }
+    
+    .form button:hover {
+      background-color: #3367d6;
+    }
+    
+    .form label {
+      display: block;
+      text-align: left;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    
+    .form .cancel-button {
+      background-color: #ccc;
+    }
+    
+    .form .cancel-button:hover {
+      background-color: #999;
+    }
+    
+    .form .register-link {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form class="form" id="loginForm" method="get" action="../login">
+      <label for="userId">Enter your username:</label>
+      <input type="text" id="username" name="username" placeholder="User ID" required>
+      <label for="password">Enter your password:</label>
+      <input type="password" id="password" name="password" placeholder="Password" required >
+      <div class="button-container">
+        <button type="submit" onclick="login()">Login</button>
+        <button type="button" class="cancel-button" onclick="cancel()">Cancel</button>
+      </div>
+      <a href="./register.html" class="register-link">Register</a>
+    </form>
+  </div>
+
+  <script>
+    function login() {
+     document.getElementById('loginForm').submit();
+    }
+
+    function cancel() {
+      history.back();
+    }
+  </script>
+</body>
+</html>

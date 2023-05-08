@@ -1,0 +1,165 @@
+*{
+    margin: 0%;
+    border: 0;
+    box-sizing: border-box;
+    padding: 0%;
+}
+:root {
+    --var-primary: #f0f0f0;
+  }
+.container {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+  width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background-color: var(--var-primary);
+    height: 10vh;
+}
+
+.title {
+    text-align: center;
+    font-size: 24px;
+}
+
+.button {
+    padding: 15px;
+    background-color:var(--var-primary);
+    color: black;
+ 
+    position: relative;
+    width: 10vh;
+    height: 100%;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    transform: scale(1.5);
+    margin-right: 10px;
+}
+
+.menuList {
+    position: fixed;
+    display: none;
+    top:10vh ;
+    height: 100vh;
+    width: 20vw;
+    max-width: 200px;
+  }
+  
+  .floating-menu {
+    background-color: #383939;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(39, 183, 235, 0.636);
+  }
+ .menu-item:hover{
+    cursor: pointer;
+    color: rgb(75, 130, 232);
+    font-size:20px ;
+  }
+  
+  .menu-item {
+    color: white;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid rgb(118, 116, 116);
+  }
+
+
+
+.about{
+  margin-left: 30px;
+  margin-right: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  padding:30px;
+  color: whitesmoke;
+  background-color: rgb(80, 80, 80);
+}
+.aboutUs h1{
+  color: rgb(28, 137, 215);
+  text-align: center;
+}
+.aboutUs{
+  margin-top: 40px;
+  margin-left: 20px;
+  margin-right: 20px;
+  color: rgb(42, 41, 41);
+  background-color: rgb(174, 211, 219);
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  padding: 20px;
+}
+.aboutUs *{
+  margin-left: 20px; 
+}
+
+.aboutUs p{
+  font-size: 18px;
+}
+
+.address {
+  background-color: #a8e5a8;
+  padding: 20px;
+  text-align: center;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+.address h1{
+  margin-bottom: 20px;
+  color: green;
+}
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  tr:nth-child(odd) {
+    background-color: #e4b4b4;
+  }
+  th {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  .institutes{
+    margin: 20px;
+    padding: 20px;
+    background-color: rgb(249, 190, 142);
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+  }
+  .institutes *{
+    padding: 15px;
+  }
+  .institutes h1{
+    color: orangered;
+  }
+
+  .copyright{
+    padding: 30px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(37, 153, 153);
+    margin: 40px;
+    font-size: 18px;
+    border-bottom-left-radius: 40px;
+    border-top-right-radius: 40px;
+  }

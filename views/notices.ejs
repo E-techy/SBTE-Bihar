@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Notices</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+        <style>
+            body {
+	font-family: Arial, sans-serif;
+	background-color: #FDFDFD;
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	background-color: #2A2B2E;
+	color: #FFF;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+}
+
+h1 {
+	font-size: 32px;
+	margin: 0;
+}
+
+.search-bar {
+	display: flex;
+	align-items: center;
+	margin-top: 20px;
+}
+
+input[type="text"] {
+	flex: 1;
+	padding: 10px;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+button {
+	background-color: #4CAF50;
+	border: none;
+	padding: 10px;
+	cursor: pointer;
+	border-radius: 15px;
+}
+
+button span {
+	height: 20px;
+	color: rgb(17, 56, 227);
+}
+
+#sort-by {
+	margin-left: 10px;
+	padding: 10px;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	background-color: #FFF;
+	color: #2A2B2E;
+}
+
+.notices-table {
+	margin: 20px auto;
+	border-collapse: collapse;
+	width: 80vw;
+}
+
+.notices-table th,
+.notices-table td {
+	padding: 10px;
+	text-align: left;
+	border-radius: 5px;
+}
+.notices-table th {
+	background-color: #2A2B2E;
+	color: #FFF;
+}
+
+.notices-table tbody tr:nth-child(even) {
+	background-color: #F5F5F5;
+}
+
+.notices-table tbody tr:hover {
+	background-color: #F2F2F2;
+}
+
+a {
+	color: #2A2B2E;
+	text-align: center;
+}
+    a:hover {
+	text-decoration: underline;
+	color: rgb(62, 141, 239);
+}
+
+@media (max-width: 600px) {
+	h1 {
+		font-size: 24px;
+	}
+
+	input[type="text"] {
+		font-size: 14px;
+	}
+
+	button img {
+		height: 16px;
+	}
+
+	#sort-by {
+		font-size: 14px;
+		padding: 5px;
+	}
+
+	.notices-table {
+		width: 100%;
+	}
+
+	.notices-table th,
+	.notices-table td {
+		font-size: 14px;
+		padding: 5px;
+	}
+}
+
+        </style>
+	</head>
+	<body>
+		<header>
+			<h1>SBTE-Bihar Notices</h1>
+			<div class="search-bar">
+				<input type="text" placeholder="Search..." id="searchBar">
+				<button id="searchButton">
+					<span class="material-symbols-outlined">
+						search
+						</span>
+				</button>
+				<select id="sort-by">
+					<option value="newest">Newest on top</option>
+					<option value="oldest">Oldest on top</option>
+				</select>
+			</div>
+		</header>
+		<main>
+			<table class="notices-table">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Description</th>
+						<th>Download</th>
+					</tr>
+				</thead>
+				<tbody id="tableList">
+				</tbody>
+			</table>
+		</main>
+	</body>
+
+<script type="module">
+ import {notices} from "./notices.js"
+ addAllNotices();
+
+const tbody=document.getElementById("tableList");
+const sortSelect = document.getElementById('sort-by');
+const searchBar=document.getElementById("searchBar");
+const searchButton=document.getElementById("searchButton");
+
+// Add a change event listener to the select menu
+sortSelect.addEventListener('change', function() {
+  // Get the currently selected option
+  var selectedOption = this.options[this.selectedIndex];
+
+  // Get the value of the selected option
+  var selectedValue = selectedOption.value;
+
+  // Do something with the selected value
+  if (selectedValue=="newest") {
+	tbody.innerHTML='';
+	addAllNotices();
+  }
+  else{
+	tbody.innerHTML="";
+	for (let i = notices.length-1; i >=0; i--) {
+		const element = notices[i];
+		addNoticesToTable(element[0],element[1],element[2]);
+		
+	}
+  }
+});
+
+searchButton.addEventListener("click",()=>{
+	let query=searchBar.value;
+	let newArray=filterArray(notices,query);
+	tbody.innerHTML=""
+	for (let i = 0; i < newArray.length; i++) {
+		const element = newArray[i];
+		addNoticesToTable(element[0],element[1],element[2]);
+		
+	}
+})
+
+searchBar.addEventListener("input",()=>{
+	let query=searchBar.value;
+	let newArray=filterArray(notices,query);
+	tbody.innerHTML=""
+	for (let i = 0; i < newArray.length; i++) {
+		const element = newArray[i];
+		addNoticesToTable(element[0],element[1],element[2]);
+		
+	}
+})
+
+function filterArray(array,query) {
+  let queryArray=splitWords(query);
+  let result=[];
+  for (let i = 0; i < array.length; i++) {
+    let curElement = array[i][1].toLowerCase();
+    let wordsMatched=0;
+
+    for (let j = 0; j < queryArray.length; j++) {
+        let element = queryArray[j];
+        if (curElement.includes(element)) {
+            wordsMatched++;
+        }
+    }
+    result.push([wordsMatched,array[i]]);
+  }
+  sortArray(result);
+  return removeUnwantedElementsFromArray(result);
+}
+
+function splitWords(string) {
+    string.trim();
+    return string.toLowerCase().split(" ");
+}
+
+function sortArray(array) {
+    return array.sort((a,b)=>b[0]-a[0]);
+}
+
+function removeUnwantedElementsFromArray(array) {
+    let result=[];
+    for (let i = 0; i < array.length; i++) {
+        result.push(array[i][1]);
+        
+    }
+    return result;
+}
+
+
+
+ function addAllNotices() {
+	for (let i = 0; i < notices.length; i++) {
+	const element = notices[i];
+	addNoticesToTable(element[0],element[1],element[2]);
+ }
+ }
+
+function addNoticesToTable(date, description, downloadLink) {
+  // Get a reference to the table body
+  var tbody = document.querySelector('.notices-table tbody');
+
+  // Create a new row
+  var tr = document.createElement('tr');
+
+  // Create the cells for the row
+  var dateCell = document.createElement('td');
+  var descriptionCell = document.createElement('td');
+  var downloadCell = document.createElement('td');
+
+  // Set the text and href attributes for the cells
+  dateCell.textContent = date;
+  descriptionCell.textContent = description;
+  downloadCell.innerHTML = '<a href="' + downloadLink + '">Download</a>';
+
+  // Add the cells to the row
+  tr.appendChild(dateCell);
+  tr.appendChild(descriptionCell);
+  tr.appendChild(downloadCell);
+
+  // Add the row to the table
+  tbody.appendChild(tr);
+}
+
+	</script>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OTP Form</title>
+  <style>
+    .container {
+      text-align: center;
+    }
+
+    .otp-input {
+      width: 30px;
+      height: 30px;
+      font-size: 20px;
+      text-align: center;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .verify-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 10px 0;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .verify-btn:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Enter your One-Time-Password (OTP)</h1>
+    <p>Send to your email id</p>
+    <form id="verifyOtp">
+    <input type="text" class="otp-input" id="digit1" maxlength="1" required>
+    <input type="text" class="otp-input" id="digit2" maxlength="1" required>
+    <input type="text" class="otp-input" id="digit3" maxlength="1" required>
+    <input type="text" class="otp-input" id="digit4" maxlength="1" required>
+    <input type="text" class="otp-input" id="digit5" maxlength="1" required>
+    <input type="text" class="otp-input" id="digit6" maxlength="1" required>
+    <br>
+    <button class="verify-btn" id="submitBtn">Verify</button>
+  </form>
+  </div>
+
+  <script>
+    const verifyOtp=document.getElementById("verifyOtp");
+    const emailId=`<%- email %>`;
+    const userId= `<%- userID %>`;
+    const submitBtn=document.getElementById("submitBtn");
+    console.log(emailId);
+   
+    submitBtn.addEventListener("click", async()=>{
+      var digit1 = document.getElementById("digit1").value;
+      var digit2 = document.getElementById("digit2").value;
+      var digit3 = document.getElementById("digit3").value;
+      var digit4 = document.getElementById("digit4").value;
+      var digit5 = document.getElementById("digit5").value;
+      var digit6 = document.getElementById("digit6").value;
+      var otp = digit1 + digit2 + digit3 + digit4 + digit5 + digit6; 
+      let req=`./verifyOtp?email=${emailId}&userId=${userId}&OTP=${otp}`;     
+      let res=await fetch(req).then(res => res.json());
+      if (res.success==true) {
+          alert("You have been successfully registered to SBTE-Bihar");
+          window.location.href="./login/index.html"
+      }else{
+        alert("The entered OTP is wrong")
+      }
+    })
+
+  </script>
+</body>
+</html>

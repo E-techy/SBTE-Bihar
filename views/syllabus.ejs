@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SBTE Syllabus</title>
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.search-container {
+  margin: 20px auto;
+  max-width: 80vw; /* Change to 80vw on small screens */
+  width: 60vw; /* Change to 60vw on large screens */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align items to the start */
+}
+
+.search-container input[type="text"] {
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
+
+.search-container button {
+  padding: 10px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px; /* Add margin to create space between search bar and button */
+}
+
+.search-container button svg {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+}
+
+.search-container button:hover {
+  background-color: #45a049;
+}
+
+main {
+  padding: 20px;
+}
+
+.table-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.table-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  max-width: 60vw; /* Change to 60vw on large screens */
+  width: 90vw; /* Change to 90vw on small screens */
+}
+
+.table-list li .icon {
+  margin-right: 10px;
+}
+
+.table-list li .name {
+  flex-grow: 1;
+}
+
+.table-list li .download-btn {
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.table-list li .download-btn:hover {
+  background-color: #2448e8;
+}
+
+
+.table-list li .icon img{
+  width: 25px;
+  height: 30px;
+}
+.table-list a{
+  text-decoration: none;
+  color: white;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SBTE- Bihar Syllabus 2020 onwards</h1>
+    <div class="search-container">
+      <input type="text" placeholder="Search..." id="searchBar">
+      <button type="button" id="searchButton">Search</button>
+    </div>
+  </header>
+  
+  <main>
+    <ul class="table-list" id="table-list">
+    </ul>
+  </main>
+</body>
+<script type="module">
+  import { syllabusArray } from "./syllabusArray.js";
+  const searchInput = document.getElementById("searchBar");
+ 
+  const searchButton=document.getElementById("searchButton");
+  const tableList = document.getElementById('table-list');
+
+
+searchButton.addEventListener("click",()=>{
+      let searchValue = searchInput.value.trim();
+      tableList.innerHTML = '';
+      let array=syllabusArray;
+      let filteredArray=filterArray(syllabusArray,searchValue)   
+      filteredArray.forEach((curAddress)=>{
+        addPdfToTheList(curAddress);
+      })
+      
+  })
+
+  searchInput.addEventListener("input",()=>{
+      let searchValue = searchInput.value.trim();
+      tableList.innerHTML = '';
+      let array=syllabusArray;
+      let filteredArray=filterArray(syllabusArray,searchValue)   
+      filteredArray.forEach((curAddress)=>{
+        addPdfToTheList(curAddress);
+      })
+      
+  })
+
+
+
+  syllabusArray.forEach((curElement)=>{
+    addPdfToTheList(curElement);
+  })
+  
+  function addPdfToTheList(address) {
+  // Create table element
+  const tableElement = document.createElement('li');
+
+  // Create icon span
+  const iconSpan = document.createElement('span');
+  iconSpan.classList.add('icon');
+  const iconImg = document.createElement('img');
+  iconImg.src = 'https://cdn-icons-png.flaticon.com/512/337/337946.png';
+  iconImg.alt = 'PDF Icon';
+  iconSpan.appendChild(iconImg);
+
+  // Create name span
+  const nameSpan = document.createElement('span');
+  nameSpan.classList.add('name');
+  nameSpan.textContent = address;
+
+  // Create download button
+  const downloadBtn = document.createElement('button');
+  downloadBtn.classList.add('download-btn');
+  const downloadLink = document.createElement('a');
+  downloadLink.href = address;
+  downloadLink.download = '';
+  downloadLink.textContent = 'Download';
+  downloadBtn.appendChild(downloadLink);
+
+  // Add elements to table element
+  tableElement.appendChild(iconSpan);
+  tableElement.appendChild(nameSpan);
+  tableElement.appendChild(downloadBtn);
+
+  // Add table element to table-list
+  const tableList = document.querySelector('.table-list');
+  tableList.appendChild(tableElement);
+}
+
+
+
+
+function filterArray(array,query) {
+  let queryArray=splitWords(query);
+  let result=[];
+  for (let i = 0; i < array.length; i++) {
+    let curElement = array[i].toLowerCase();
+    let wordsMatched=0;
+
+    for (let j = 0; j < queryArray.length; j++) {
+        let element = queryArray[j];
+        if (curElement.includes(element)) {
+            wordsMatched++;
+        }
+    }
+    result.push([wordsMatched,array[i]]);
+    
+  }
+  sortArray(result);
+  return removeUnwantedElementsFromArray(result);
+}
+
+function splitWords(string) {
+    string.trim();
+    return string.toLowerCase().split(" ");
+}
+
+function sortArray(array) {
+    return array.sort((a,b)=>b[0]-a[0]);
+}
+
+function removeUnwantedElementsFromArray(array) {
+    let result=[];
+    for (let i = 0; i < array.length; i++) {
+        result.push(array[i][1]);
+        
+    }
+    return result;
+}
+
+
+</script>
+</html>

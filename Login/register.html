@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            font-size: 13px;
+          }
+      
+          .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          }
+      
+          .form-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+          }
+      
+          .form-container img {
+            display: block;
+            margin: 0 auto;
+            width: 1px;
+          }
+      
+          .form-container .logo-text {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #333;
+          }
+      
+          .form-container label {
+            display: block;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            font-weight: bold;
+          }
+      
+          .form-container input[type="text"],
+          .form-container input[type="email"],
+          .form-container input[type="password"],
+          .form-container input[type="date"] {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid  rgb(202, 198, 198);
+            background-color: #ffffff;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          }
+      
+          .form-container .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+          }
+      
+          .form-container button {
+            padding: 10px 20px;
+            border-radius: 3px;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+          }
+      
+          .form-container .btn-submit {
+            background-color: #1495d1;
+          }
+      
+          .form-container .btn-cancel {
+            background-color: #f44336;
+          }
+      
+          @media (max-width: 600px) {
+            .form-container {
+              max-width: 90%;
+            }
+          }
+        </style>
+      </head>
+      
+      
+<body>
+  <div class="form-container">
+    <h1>Registration Form</h1>
+    <img src="https://sbteonline.in/VAADIN/themes/ems/img/sbte.png" alt="SBTE Logo">
+    <p class="logo-text">SBTE- Bihar</p>
+    <form method="get" action="../register">
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="phone">Phone Number:</label>
+      <input type="text" id="phone" name="phone" required>
+
+      <label for="reg-number">Registration Number:</label>
+      <input type="text" id="reg-number" name="regnumber" required>
+
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" name="dob" required>
+
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <label for="confirm-password">Confirm Password:</label>
+      <input type="password" id="confirm-password" name="confirm-password" required>
+
+      <div class="btn-container">
+        <button type="button" class="btn-cancel" onclick="cancel()">Cancel</button>
+        <button type="submit" class="btn-submit">Submit</button>
+        </div>
+        </form>
+        
+    </div>
+</body>
+
+<script>
+
+    function cancel() {
+        history.back();
+    }
+    // JavaScript code here
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirm-password");
+
+    function checkPasswordMatch() {
+      if (passwordInput.value !== confirmPasswordInput.value) {
+        confirmPasswordInput.setCustomValidity("Passwords do not match");
+      } else {
+        confirmPasswordInput.setCustomValidity("");
+      }
+    }
+
+    passwordInput.addEventListener("input", checkPasswordMatch);
+    confirmPasswordInput.addEventListener("input", checkPasswordMatch);
+
+    function checkPasswordValidity() {
+      const password = passwordInput.value;
+
+      const minLength = 10;
+      const maxLength = 20;
+      const hasSpecialChar = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password);
+      const hasNumber = /\d/.test(password);
+      const hasLowercase = /[a-z]/.test(password);
+      const hasUppercase = /[A-Z]/.test(password);
+
+      if (
+        password.length < minLength ||
+        password.length > maxLength ||
+        !hasSpecialChar ||
+        !hasNumber ||
+        !hasLowercase ||
+        !hasUppercase
+      ) {
+        passwordInput.setCustomValidity(
+          "Password should be between 10 and 20 characters long, and contain at least one special character, one number, one lowercase, and one uppercase character."
+        );
+      } else {
+        passwordInput.setCustomValidity("");
+      }
+    }
+
+    passwordInput.addEventListener("input", checkPasswordValidity);
+    
+  </script>
+
+</html>
