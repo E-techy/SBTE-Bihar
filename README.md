@@ -14,6 +14,7 @@ It contains a page where notices can pe set and a page where the syllabus of dif
 Clone the repository
 run npm install
 then create a .env file containing the required credentials
+#
 1.PORT
 2.MONGO_DB_USERNAME
 3.MONGO_DB_PASSWORD
@@ -21,7 +22,7 @@ then create a .env file containing the required credentials
 5.GMAIL_ID          Your gmail ID which is used to send OTP to users to verify them
 to log in to the mongoDB database.
 then after saving the env file run
-#npm start
+# npm start
 
-Now the server will be listening on port you have specified in the .env file 
+#Now the server will be listening on port you have specified in the .env file 
 go to that port using http://localhost:PORT;
